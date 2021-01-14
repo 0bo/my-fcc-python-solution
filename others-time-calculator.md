@@ -1,5 +1,6 @@
 ## [solution1](https://repl.it/@kelvinho1234/boilerplate-time-calculator#time_calculator.py)
 
+```python
 def add_time(start, duration, day=None):
   
   start_hr = int(start[:-2].split(":")[0])
@@ -56,10 +57,12 @@ def add_time(start, duration, day=None):
   new_time = str(new_hr) + ":" + str(end_min).zfill(2) + new_period  + new_weekday + day_count
 
   return new_time
- 
- 
+``` 
+
+
 ## [solution2](https://repl.it/@robertue1/fcc-time-calculator#time_calculator.py)
 
+```python
   def add_time(start, duration, initialday='None'):
 
 #Getting the initial time
@@ -189,9 +192,11 @@ def add_time(start, duration, day=None):
       new_time = stringh + ":" + stringm + " " + meridiem + " (" +str(auxndays)+ " days later)"
 
   return new_time
-  
+  ```
   
   ## [solution3](https://repl.it/@ManshulArora/time-calculator#time_calculator.py)
+  
+```python
   def add_time(start, duration, day_name = None):
 
   #Splitting the time strings 
@@ -290,10 +295,11 @@ def add_time(start, duration, day=None):
       final_result = f"{new_total_hour}:{new_minute:02} {new_am_pm} {return_day}"
  
   return final_result
+```
   
+## [solution4](https://github.com/ShreyasSubhedar/fcc-time-calculator/blob/master/time_calculator.py)
   
-  ## [solution4](https://github.com/ShreyasSubhedar/fcc-time-calculator/blob/master/time_calculator.py)
-  
+```python
   def add_time(start, duration, day=None):
     # Maintaining Days in a week
     day_map = {
@@ -369,7 +375,9 @@ def add_time(start, duration, day=None):
             return time_stamp + ', ' + ans_day + ' (next day)'
         return time_stamp + ', ' + ans_day + ' (' + str(
             total_day) + ' days later)'
-            
+```
+
+
 ## [solution5](https://github.com/pkro/fcc_time_calculator/blob/main/time_calculator.py)
 
 '''
@@ -386,7 +394,7 @@ add_time("11:43 PM", "24:20", "tueSday")
 add_time("6:30 PM", "205:12")
 # Returns: 7:42 AM (9 days later)
 '''
-
+```python
 full_day_minutes = 24 * 60
 # no libs to be used, otherwise datetime would have these
 weekdays = ['monday', 'tuesday', 'wednesday',
@@ -491,3 +499,4 @@ def add_time(start, duration, weekday=""):
 
     new_time = f'{pad_time(end_h, end_m)} {period}{new_weekday}{days_later}'
     return new_time
+```
