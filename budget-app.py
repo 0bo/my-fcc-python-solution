@@ -1,40 +1,48 @@
 class Category:
   def __init__(self, category):
-    self.category = category
+    self.name = category
     self.ledger = []
-
-  def deposit(self, amount, description = ''):
-    self.ledger = self.ledger.append({"amount": amount, "description": description})
+  
+  def deposit(self, amount, description = None):
+    if description == None:
+      self.ledger.append({"amount": amount, "description": ''})
+    else:
+       self.ledger.append({"amount": amount, "description": description})
   
   def get_balance(self):
-    current_balance = None
+    current_balance = 0
     for item in self.ledger:
-      current_balance =+ item["amount"]
+      current_balance += item["amount"]
     return current_balance
 
   def check_funds(self, amount):
-    current_balance = self.get_balance
-    if current_balance - amount < 0:
+    return amount <= self.get_balance() 
+    #current_balance = self.get_balance
+    #if current_balance - amount < 0:
+    #  return False
+    #else:
+    #  return True
+
+  def withdraw(self, amount, description = None):
+    if self.check_funds(amount) == False:
       return False
-    else:
+    else:  
+      if description == None:
+        self.ledger.append({"amount": -(amount), "description": ''})
+      else:
+        self.ledger.append({"amount": -(amount), "description": description})
       return True
 
-  def withdraw(self, amount, description = ''):
-    if self.check_funds() == False:
-      return False
-    else:
-      self.ledger = self.ledger.append({"amount": -amount, "description": description})
-
   def transfer(self, amount, new_category):
-    if self.check_funds() == False:
+    if self.check_funds(amount) == False:
       return False
     else:
-      self.ledger.withdraw(amount, "Transfer to %s"%(new_category))
-      new_category.ledger.deposit(amount, "Transfer from %s"%(self.category))
+      self.ledger.append({'amount' : -(amount), 'description': f"Transfer to {new_category.name}"})
+      new_category.deposit(amount, "Transfer from %s"%(self.name))
       return True
 
   def __str__(self):
-    output = self.category.center(30,"*")
+    output = self.name.center(30,"*")
     for item in self.ledger:
       try:
         item_desc = item["description"][0:23]
@@ -43,7 +51,8 @@ class Category:
       item_amnt = str('{:.2f}'.format(item['amount']))
       output += f"\n{item_desc:<23}{item_amnt:>7}"
     total_amount = str(self.get_balance())
-    output += f"\nTotal: total_amount"
+    output += f"\nTotal: {total_amount}"
+    return  output
 
 
 def create_spend_chart(categories):
@@ -62,13 +71,13 @@ def create_spend_chart(categories):
   for i in range(100,-10,-10):
     output += '\n' + f"{i}".rjust(3) + '| '
     for percent in cates_percent.values():
-      if percent > i:
-        output += 'o '
+      if percent >= i:
+        output += 'o  '
       else:
-        output =+ "  "
-  output += "    " + '-'*(len(cates_percent.keys())*3+1)
+        output += "   "
+  output += "\n    " + '-'*(len(cates_percent.keys())*3+1)
   max_cate_len = max(len(i) for i in cates_percent.keys())
-  output += '\n    '
+  output += '\n     '
   for i in range(max_cate_len):
     for name in cates_percent.keys():
       if len(name) > i:
@@ -76,5 +85,5 @@ def create_spend_chart(categories):
       else:
         output += "   "
     if i < max_cate_len-1:
-      output += "\n    "
+      output += "\n     "
   return output
