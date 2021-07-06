@@ -87,3 +87,5 @@ def create_spend_chart(categories):
     if i < max_cate_len-1:
       output += "\n     "
   return output
+
+  Thx for @trsilva32 https://github.com/trsilva32/BudgetApp/blob/main/budget.py
